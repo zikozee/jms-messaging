@@ -8,6 +8,9 @@ import org.springframework.jms.support.converter.MessageType;
 
 @Configuration
 public class JmsConfig {
+
+    public static final String My_QUEUE = "my-hello-world";
+
     //POJO <-> Object <=> JSON
     @Bean
     public MessageConverter messageConverter(){
