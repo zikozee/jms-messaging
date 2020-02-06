@@ -34,7 +34,7 @@ public class HelloSender {
     }
 
     @Scheduled(fixedRate = 2000)
-    public void sendandReceiveMessage() throws JMSException {
+    public void sendAndReceiveMessage() throws JMSException {
 
         HelloWorldMessage message = HelloWorldMessage
                 .builder()
@@ -42,17 +42,15 @@ public class HelloSender {
                 .message("Hello")
                 .build();
 
-        Message receviedMsg = jmsTemplate.sendAndReceive(JmsConfig.MY_SEND_RCV_QUEUE, new MessageCreator() {
+        Message receivedMsg = jmsTemplate.sendAndReceive(JmsConfig.MY_SEND_RCV_QUEUE, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
-                Message helloMessage = null;
+                Message helloMessage;
 
                 try {
                     helloMessage = session.createTextMessage(objectMapper.writeValueAsString(message));
                     helloMessage.setStringProperty("_type", "com.zikozee.jms_messaging.model.HelloWorldMessage");
 
-                    System.out.println();
-                    System.out.println();
                     System.out.println("Sending Hello");
 
                     return helloMessage;
@@ -63,7 +61,7 @@ public class HelloSender {
             }
         });
 
-        System.out.println(receviedMsg.getBody(String.class));
+        System.out.println(receivedMsg.getBody(String.class));
 
     }
 }
